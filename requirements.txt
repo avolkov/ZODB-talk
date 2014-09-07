@@ -1,0 +1,11 @@
+BTrees==4.0.8
+ZConfig==3.0.4
+ZODB==4.0.1
+argparse==1.2.1
+persistent==4.0.8
+six==1.7.3
+transaction==1.4.3
+wsgiref==0.1.2
+zc.lockfile==1.1.0
+zdaemon==4.0.0
+zope.interface==4.1.1
