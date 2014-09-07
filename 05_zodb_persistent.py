@@ -2,9 +2,8 @@
 
 import transaction
 import persistent
-from ZODB import DB, FileStorage
 
-from common import fs_cleanup
+from common import db_setup
 
 fruit = {
     'apple': {"color": "red", "weight": 182},
@@ -16,18 +15,6 @@ fruit = {
 vegetable = {
     'pickle': {"color": "green", "weight": 39}
 }
-
-
-def db_setup():
-    """
-    Open database connection
-    storage -> database -> connection -> root node
-    """
-    fs_cleanup()
-    storage = FileStorage.FileStorage('fruits.fs')
-    db = DB(storage)
-    connection = db.open()
-    return (db, connection.root())
 
 
 class Fruit(persistent.Persistent):
