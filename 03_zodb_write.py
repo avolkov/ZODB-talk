@@ -3,6 +3,8 @@
 import transaction
 from ZODB import DB, FileStorage
 
+from common import fs_cleanup
+
 fruit = {
     'apple': {"color": "red", "weight": 182},
     'banana': {"color": "yellow", "weight": 118},
@@ -16,14 +18,15 @@ def db_setup():
     Open database connection
     storage -> database -> connection -> root node
     """
+    fs_cleanup()
     storage = FileStorage.FileStorage('fruits.fs')
     db = DB(storage)
     connection = db.open()
-    return connection.root()
+    return (db, connection.root())
 
 
 if __name__ == "__main__":
-    root_node = db_setup()
+    _, root_node = db_setup()
     # print empty db
     print root_node
     # add child node
