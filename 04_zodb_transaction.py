@@ -28,13 +28,25 @@ def db_setup():
 
 if __name__ == "__main__":
     db, root_node = db_setup()
-    print "** display root node containing 'fruit' child"
+    print "**root node containing 'fruit' child"
     print root_node
-    print "** display 'fruit' child"
+    print "**fruit' child"
     print root_node['fruit']
-    print "** display transaction history"
-    print db.undoInfo()
-    print "** undo last transaction"
-    db.undo(db.undoInfo()[0])
+    # add vegetable node
+    root_node['vegetable'] = vegetable
+    transaction.commit()
+    print "**fruits & vegetables"
     print root_node
+    print
+    print
+    print "**transaction history"
+    print len(db.undoInfo())
+
+    print "** undo last transaction"
+    #last_transaction = db.undoInfo()[0]
+    db.undo(db.undoInfo()[0]['id'])
+    #db.undo(db.undoInfo()[0]['id'])
+    print root_node
+    transaction.commit()
+    print len(db.undoInfo())
     import ipdb; ipdb.set_trace()
