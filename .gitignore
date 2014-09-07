@@ -53,3 +53,7 @@ coverage.xml
 docs/_build/
 
 *.pkl
+*.fs
+*.fs.lock
+*.fs.index
+*.tmp

@@ -20,12 +20,18 @@ class Fruit(object):
 
 
 def save_dict():
+    """
+    Save fruits dictionary
+    """
     fname = open('fruits_dict.pkl', 'w')
     pickle.dump(fruit, fname, pickle.HIGHEST_PROTOCOL)
     fname.close()
 
 
 def save_obj():
+    """
+    Save 'Fruit' class instances
+    """
     fruits = []
     fname = open('fruits_obj.pkl', 'w')
     for name, opt in fruit.iteritems():
