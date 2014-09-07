@@ -77,8 +77,12 @@ if __name__ == "__main__":
         basket.append(harvest.next())
     root_node['basket'] = basket
     transaction.commit()
-    print "Basket length: %d" % len(root_node['basket'])
+    print "Basket name: '%s' Basket length: '%d' Basket type '%s'" % (
+        root_node['basket'].name, len(root_node['basket']),
+        root_node['basket'].__class__
+    )
     random_fruit = root_node['basket'][33]
     print "Random Fruit: ",
+    print random_fruit.__class__,
     print random_fruit.name,
     print random_fruit
