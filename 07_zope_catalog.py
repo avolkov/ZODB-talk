@@ -8,7 +8,7 @@ from persistent.list import PersistentList
 
 from repoze.catalog.indexes.text import CatalogTextIndex
 from repoze.catalog.catalog import Catalog
-from repoze.catalog.query import Eq, Contains
+from repoze.catalog.query import Eq
 
 from common import db_setup
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     transaction.commit()
     ## Preparing catalog
     ## see http://docs.repoze.org/catalog/overview.html
-    nodes = {}
+    nodes = PersistentMapping()
     catalog = PersistentCatalog()
     root_node['catalog'] = catalog
     catalog['email'] = CatalogTextIndex(get_email)
@@ -62,6 +62,8 @@ if __name__ == '__main__':
         ni = catalog.next_index()
         nodes[ni] = d
         catalog.index_doc(ni, d)
+    root_node['catalog_map'] = nodes
+    transaction.commit()
     (q_count, q_result) = catalog.query(Eq('country', "Belgium"))
     print "Number of results: %d" % q_count
     print "Items:"
