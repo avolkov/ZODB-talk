@@ -8,6 +8,7 @@ from persistent.list import PersistentList
 
 from repoze.catalog.indexes.text import CatalogTextIndex
 from repoze.catalog.catalog import Catalog
+from repoze.catalog.query import Eq, Contains
 
 from common import db_setup
 
@@ -29,11 +30,11 @@ def load_data(fname, root_node):
 
 
 def get_email(obj, default):
-    return getattr(obj, 'email', default)
+    return obj['email'] if obj['email'] else default
 
 
 def get_country(obj, default):
-    return getattr(obj, 'country', default)
+    return obj['country'] if obj['country'] else default
 
 
 class PersistentCatalog(Catalog, PersistentMapping):
@@ -52,11 +53,17 @@ if __name__ == '__main__':
     transaction.commit()
     ## Preparing catalog
     ## see http://docs.repoze.org/catalog/overview.html
-
+    nodes = {}
     catalog = PersistentCatalog()
     root_node['catalog'] = catalog
     catalog['email'] = CatalogTextIndex(get_email)
     catalog['country'] = CatalogTextIndex(get_country)
-
-
-    import ipdb; ipdb.set_trace()
+    for d in root_node['data']:
+        ni = catalog.next_index()
+        nodes[ni] = d
+        catalog.index_doc(ni, d)
+    (q_count, q_result) = catalog.query(Eq('country', "Belgium"))
+    print "Number of results: %d" % q_count
+    print "Items:"
+    for res in q_result.items():
+        print nodes[res[0]]
