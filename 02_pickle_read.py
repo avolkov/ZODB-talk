@@ -2,7 +2,7 @@
 
 import pickle
 
-#from pickle_write import Fruit
+from pickle_write import Fruit
 
 
 def load_stuff(name):
